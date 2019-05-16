@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <body>
     <h2> Array = programmer it</h2>
     <input type="text" id="myText" value="programmer it">
@@ -11,11 +12,12 @@
             var firstinput = document.getElementById("myText").value;
             var lowerCase = toLowerCase(firstinput);
             var input = deletespace(lowerCase);
-            var array = ['pro',  'gram', 'merit','program', 'it','programmer'];
+            var array = ['pro', 'mer', 'gram', 'merit', 'program', 'it', 'programmer'];
             var result = filter(array, input);
 
             document.getElementById("demo").innerHTML = JSON.stringify(result);
         }
+
         function filter(array, input) {
             var result = [];
             var newinput = "";
@@ -39,18 +41,18 @@
                 newobject = [];
                 newinput = "";
             })
-            
+
             //merapihkan array
             var result2 = [];
             result.map((item) => {
 
                 for (var i = 0; i < input.length; i++) {
-                newinput += input.charAt(i);
-                var find = item.indexOf(newinput);
-                if (find !== -1) {
-                    newobject.push(newinput);
-                    newinput = "";
-                }
+                    newinput += input.charAt(i);
+                    var find = item.indexOf(newinput);
+                    if (find !== -1) {
+                        newobject.push(newinput);
+                        newinput = "";
+                    }
                 }
                 result2.push(newobject);
                 newobject = [];
@@ -58,23 +60,35 @@
             })
 
 
+
             var allresult = removeDuplicateObjects(result2);
+
+            // sorting berdasarkan length pada array
+            allresult.sort(function (a, b) {
+                // ASC  -> a.length - b.length
+                // DESC -> b.length - a.length
+                return a[0].length - b[0].length;
+            });
             return allresult;
         }
 
         function removeDuplicateObjects(array) {
             return [...new Set(array.map(s => JSON.stringify(s)))]
-            .map(s => JSON.parse(s));
+                .map(s => JSON.parse(s));
         }
+
         function noDuplicates(arr) {
             return [...new Set(arr.map(v => v.id))];
         }
+
         function deletespace(x) {
             return x.replace(/\s/g, '');
         }
+
         function toLowerCase(x) {
             return x.toLowerCase();
         }
     </script>
 </body>
+
 </html>
