@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <body>
+<body>
     <h2> Array = programmer it</h2>
     <input type="text" id="myText" value="programmer it">
     <button onclick="myFunction()">Run</button>
@@ -11,57 +11,67 @@
             var firstinput = document.getElementById("myText").value;
             var lowerCase = toLowerCase(firstinput);
             var input = deletespace(lowerCase);
-            var array = ['it', 'pro', 'gram', 'mer', 'merit', 'program', 'programmer'];
+            var array = ['pro',  'gram', 'merit','program', 'it','programmer'];
             var result = filter(array, input);
 
-            
             document.getElementById("demo").innerHTML = JSON.stringify(result);
         }
-
         function filter(array, input) {
             var result = [];
             var newinput = "";
-            for (var i = 0; i < input.length; i++) {
-                newinput += input.charAt(i);
+            var newobject = [];
 
-                var find = array.indexOf(newinput);
-                if (find !== -1) {
-                    result.push(newinput);
-                    newinput = "";
-                }
-            }
 
-            
-            var leftover = array.filter((e) => {
-                return result.indexOf(e) < 0 && input.indexOf(result.map(i => {
-                        return i
-                })) && input.indexOf(e) > -1
-            })
-
-            leftover.map((item, index) => {
+            //mendapatkan semua array yang cocok
+            array.map((item, index) => {
                 var newinput = item;
+                newobject = [];
                 var inputs = input.replace(item, '');
-                result.push('><'); //masih mencari logic nya
                 for (var i = -1; i < inputs.length; i++) {
-
                     newinput += inputs.charAt(i);
                     var find = array.indexOf(newinput);
                     if (find !== -1) {
-                        result.push(newinput);
+                        newobject.push(newinput);
                         newinput = "";
                     }
                 }
+                result.push(newobject);
+                newobject = [];
+                newinput = "";
+            })
+            
+            //merapihkan array
+            var result2 = [];
+            result.map((item) => {
+
+                for (var i = 0; i < input.length; i++) {
+                newinput += input.charAt(i);
+                var find = item.indexOf(newinput);
+                if (find !== -1) {
+                    newobject.push(newinput);
+                    newinput = "";
+                }
+                }
+                result2.push(newobject);
+                newobject = [];
+                newinput = "";
             })
 
-            
 
-            return result;
+            var allresult = removeDuplicateObjects(result2);
+            return allresult;
         }
 
+        function removeDuplicateObjects(array) {
+            return [...new Set(array.map(s => JSON.stringify(s)))]
+            .map(s => JSON.parse(s));
+        }
+        function noDuplicates(arr) {
+            return [...new Set(arr.map(v => v.id))];
+        }
         function deletespace(x) {
             return x.replace(/\s/g, '');
         }
-
         function toLowerCase(x) {
             return x.toLowerCase();
         }
